@@ -1,0 +1,74 @@
+1. Connection:
+==============
+
+1.1 How can I automatically load irssi-xmpp at irssi startup ?
+
+Simply put "irssi-xmpp" in your startup file (~/.irssi/startup):
+    echo "irssi-xmpp" >> ~/.irssi/startup
+
+1.2 How can I automatically connect to my account at irssi startup ?
+
+You can put these things in your config file (The config file can be found
+here : "~/.irssi/config"):
+
+To create a XMPP network, add to chatnets section:
+  <network> = {
+    type = "XMPP";
+    nick = "<jid>";
+  };
+
+Then you can add this at the end of the servers section:
+  {
+    address = "<address>";
+    port="<port>";
+    use_ssl = "{yes|no}";
+    chatnet = "<network>";
+    password = "<password>";
+    autoconnect = "{yes|no}";
+  };
+
+Or in irssi, you can type this:
+    /SERVER ADD -xmppnet <network> <address> <port> <password> <jid>
+
+If 0 is specified as port, the default port will be used (5222 for a regular
+connection or 5223 for SSL).
+
+Now you can connect to your jabber account by typing:
+    /CONNECT <network>
+Or just restart irssi if you have set autoconnect to yes.
+
+2. General:
+===========
+
+2.1 Why the lagmeter is not working ?
+
+The server need to support the XEP-0199 (XMPP Ping). If it doesn't
+support it, the lagmeter won't work.
+
+If your server support the XMPP Ping, maybe you didn't add the composing
+item in the statusbar. Take a look at the file GENERAL (section
+"Composing in the statusbar:).
+
+3. Scripting:
+=============
+
+3.1 How can I use or write scripts with irssi-xmpp ?
+
+...
+
+3.2 My script seems to be incompatible with irssi-xmpp and throws warnings 
+such as: Can't locate object method "xxx" via package "Irssi::Xmpp::Server".
+How can I get rid of that ?
+
+Basicly, it's because the script is IRC-specific and won't work with an
+XMPP server. Try to add a condition in the functions of your script to
+verify if the server is an IRC server and simply return if it is not.
+
+4. Themes:
+==========
+
+4.1 How can I change the theme of the messages of irssi-xmpp ?
+
+In the same way you can change the theme of the messages of irssi. Take
+a look at the source file src/fe-common/module-formats.c to see the
+whole list of irssi-xmpp messages.

@@ -1,0 +1,42 @@
+Sources layout:
+===============
+
+src/core
+src/core/xep
+src/fe-common
+src/fe-common/xep
+src/fe-text
+
+Signals:
+========
+
+xmpp xml recv
+xmpp xml send
+
+xmpp recv message
+xmpp recv presence
+xmpp recv iq
+xmpp recv others
+xmpp send message
+xmpp send presence
+xmpp send iq
+xmpp send others
+
+xmpp ssl error
+xmpp server status
+
+xmpp presence online
+xmpp presence offline
+xmpp presence changed
+
+xmpp features
+xmpp server features
+
+xmpp composing show
+xmpp composing hide
+xmpp composing start
+xmpp composing stop
+
+xmpp vcard
+
+xmpp version
