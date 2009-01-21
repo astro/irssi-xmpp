@@ -398,14 +398,17 @@ sig_connected_last(XMPP_SERVER_REC *server)
 
 	if (!IS_XMPP_SERVER(server))
 		return;
-	/* set presence available */
-	lmsg = lm_message_new_with_sub_type(NULL, LM_MESSAGE_TYPE_PRESENCE,
-	    LM_MESSAGE_SUB_TYPE_AVAILABLE);
-	str = g_strdup_printf("%d", server->priority);
-	lm_message_node_add_child(lmsg->node, "priority", str);
-	g_free(str);
-	signal_emit("xmpp send presence", 2, server, lmsg);
-	lm_message_unref(lmsg);
+        if (settings_get_bool("xmpp_presence"))
+        {
+          /* set presence available */
+          lmsg = lm_message_new_with_sub_type(NULL, LM_MESSAGE_TYPE_PRESENCE,
+                                              LM_MESSAGE_SUB_TYPE_AVAILABLE);
+          str = g_strdup_printf("%d", server->priority);
+          lm_message_node_add_child(lmsg->node, "priority", str);
+          g_free(str);
+          signal_emit("xmpp send presence", 2, server, lmsg);
+          lm_message_unref(lmsg);
+        }
 }
 
 static void
@@ -470,6 +473,7 @@ xmpp_servers_init(void)
 	settings_add_int("xmpp_proxy", "xmpp_proxy_port", 8080);
 	settings_add_str("xmpp_proxy", "xmpp_proxy_user", NULL);
 	settings_add_str("xmpp_proxy", "xmpp_proxy_password", NULL);
+        settings_add_bool("xmpp", "xmpp_presence", FALSE);
 }
 
 void
